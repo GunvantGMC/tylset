@@ -15,11 +15,14 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
   var mainWidth;
   var mainHeight;
 
-  List<int> arrayData = new List();
+  List<int> arrayData = [];
   bool flag = false;
 
   int imgNo1;
   int imgNo2;
+  int score = 0;
+
+  bool isCelebrating = false;
 
   @override
   void initState() {
@@ -33,53 +36,85 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
   Widget build(BuildContext context) {
     mainWidth = MediaQuery.of(context).size.width;
     mainHeight = MediaQuery.of(context).size.height - appBarSize;
-    print("height : " + mainHeight.toString());
-    print("height 1: " + (mainHeight * 0.8).toString());
-    return Column(
+    return Stack(
       children: [
-        Container(
-          height: mainHeight * 0.85,
-          width: mainWidth,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 6),
-            padding: EdgeInsets.all(1),
-            addRepaintBoundaries: true,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: EdgeInsets.all(0.55),
-                color: Colors.black45,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints.expand(),
-                  child: FlatButton(
-                      onPressed: () {
-                        if (imgNo1 != index) buttonClicked(index);
-                        print("Clicked");
-                      },
-                      padding: EdgeInsets.all(7.0),
-                      child: Image.asset(getImage(arrayData[index]))),
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.all(5.0),
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: Colors.cyanAccent,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(15.0),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3.0,
+                    spreadRadius: 1.0,
+                    color: Colors.grey,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Text(
+                "Score : $score",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
-              );
-            },
-            itemCount: 48,
-          ),
+              ),
+            ),
+            Container(
+              height: mainHeight * 0.85,
+              width: mainWidth,
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 6, mainAxisSpacing: 2, crossAxisSpacing: 2),
+                padding: EdgeInsets.all(1),
+                addRepaintBoundaries: true,
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.all(0.55),
+                    decoration: BoxDecoration(
+                      color: Colors.black45,
+                      border: imgNo1 == index
+                          ? Border.all(color: Colors.blueAccent, width: 3)
+                          : Border.all(),
+                    ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.expand(),
+                      child: FlatButton(
+                          onPressed: () {
+                            if (imgNo1 != index) buttonClicked(index);
+                          },
+                          padding: EdgeInsets.all(7.0),
+                          child: Image.asset(getImage(arrayData[index]))),
+                    ),
+                  );
+                },
+                itemCount: 48,
+              ),
+            ),
+          ],
         ),
-        Container(
-          height: mainHeight - (mainHeight * 0.85),
-          width: mainWidth,
-          // color: Colors.red,
-        )
+        if (isCelebrating)
+          Center(
+            child: Container(
+              // color: Color(0x44FFFFFF),
+              child: Image.asset("assets/images/celebrate.gif"),
+            ),
+          ),
       ],
     );
   }
 
   void setResetRandomNo() {
-    print("set reset");
     int count = 0;
     arrayData.clear();
     while (count < 48) {
       int rndNo = Random().nextInt(5) + 1;
       arrayData.add(rndNo);
-      // print("\t " + rndNo.toString());
       count++;
     }
   }
@@ -103,36 +138,40 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
         return "images/5.png";
         break;
       default:
-        print("unknown image no = " + num.toString());
         return "";
     }
   }
 
   void buttonClicked(int index) {
-    print("here : " + flag.toString());
-    if (flag) {
-      flag = !flag;
-      imgNo2 = index;
-      if (arrayData[imgNo1] == arrayData[imgNo2]) chanceWin(imgNo1, imgNo2);
-      imgNo1 = null;
-      imgNo2 = null;
-    } else {
-      imgNo1 = index;
-      flag = !flag;
-    }
+    setState(() {
+      if (flag) {
+        flag = !flag;
+        imgNo2 = index;
+        if (arrayData[imgNo1] == arrayData[imgNo2]) chanceWin(imgNo1, imgNo2);
+        imgNo1 = null;
+        imgNo2 = null;
+      } else {
+        imgNo1 = index;
+        flag = !flag;
+      }
+    });
   }
 
-  chanceWin(int imgNo1, int imgNo2) {
-    print("win");
+  chanceWin(int imgNo1, int imgNo2) async {
+    setState(() {
+      isCelebrating = true;
+    });
     int rndNo1, rndNo2;
     do {
       rndNo1 = Random().nextInt(5) + 1;
       rndNo2 = Random().nextInt(5) + 1;
-    } while (rndNo1 == imgNo1 && rndNo2 == imgNo2);
+    } while (rndNo1 == arrayData[imgNo1] || rndNo2 == arrayData[imgNo2] || rndNo1 == rndNo2);
+    await Future.delayed(Duration(seconds: 1));
     setState(() {
+      score += 1;
       arrayData[imgNo1] = rndNo1;
       arrayData[imgNo2] = rndNo2;
-      print("Size" + arrayData.length.toString());
+      isCelebrating = false;
     });
   }
 }
