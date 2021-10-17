@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+**TylSet** is a game developed in Flutter, which is quite popular in users
+
+Tylset basically give us the screen which contains multiple Tiles (Images) with images. 
+App user have to choose 2 Same tiles if user choosen accurate Tiles the App will replace old Tiles with new one
