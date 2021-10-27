@@ -19,7 +19,7 @@ samples, guidance on mobile development, and a full API reference.
 **TylSet** is a game developed in Flutter, which is quite popular in users
 
 Tylset basically give us the screen which contains multiple Tiles (Images) with images. 
-App user have to choose 2 Same tiles if user choosen accurate Tiles the App will replace old Tiles with new one
+App user have to choose 2 Same tiles if user choosen accurate Tiles the App will replace old Tiles with new one\
 **Image 1**\
 ![Screenshot (928)](https://user-images.githubusercontent.com/45457183/139012909-1b60d6be-b811-42b3-bfbf-6652081ea8b3.png)
 
