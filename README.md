@@ -20,3 +20,9 @@ samples, guidance on mobile development, and a full API reference.
 
 Tylset basically give us the screen which contains multiple Tiles (Images) with images. 
 App user have to choose 2 Same tiles if user choosen accurate Tiles the App will replace old Tiles with new one
+
+
+![Screenshot (928)](https://user-images.githubusercontent.com/45457183/139012093-a28dd3eb-d73a-45c9-8c6f-b93759cf121f.png)
+
+![image](https://user-images.githubusercontent.com/45457183/139012029-a89ebf3c-e4d2-4ab5-b449-dae316a27b9b.png)
+=======
