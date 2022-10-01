@@ -57,7 +57,7 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
                 ],
               ),
               child: Text(
-                "Score : $score",
+                "Total Score : $score",
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
