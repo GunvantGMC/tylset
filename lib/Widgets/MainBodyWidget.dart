@@ -38,65 +38,72 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
     mainHeight = MediaQuery.of(context).size.height - appBarSize;
     return Stack(
       children: [
-        Column(
-          children: [
-            Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: Colors.cyanAccent,
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(15.0),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 3.0,
-                    spreadRadius: 1.0,
-                    color: Colors.grey,
-                    offset: Offset(0, 3),
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.cyanAccent,
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3.0,
+                      spreadRadius: 1.0,
+                      color: Colors.grey,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Text(
+                  "Total Score : $score",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                ],
-              ),
-              child: Text(
-                "Total Score : $score",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
-            ),
-            Container(
-              height: mainHeight * 0.85,
-              width: mainWidth,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6, mainAxisSpacing: 2, crossAxisSpacing: 2),
-                padding: EdgeInsets.all(1),
-                addRepaintBoundaries: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.all(0.55),
-                    decoration: BoxDecoration(
-                      color: Colors.black45,
-                      border: imgNo1 == index
-                          ? Border.all(color: Colors.blueAccent, width: 3)
-                          : Border.all(),
-                    ),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints.expand(),
-                      child: FlatButton(
-                          onPressed: () {
-                            if (imgNo1 != index) buttonClicked(index);
-                          },
-                          padding: EdgeInsets.all(7.0),
-                          child: Image.asset(getImage(arrayData[index]))),
-                    ),
-                  );
-                },
-                itemCount: 48,
+              Container(
+                height: mainHeight * 0.85,
+                width: mainWidth,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 6,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 2),
+                  padding: EdgeInsets.all(1),
+                  addRepaintBoundaries: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.all(0.55),
+                      decoration: BoxDecoration(
+                        color: Colors.black45,
+                        border: imgNo1 == index
+                            ? Border.all(color: Colors.blueAccent, width: 3)
+                            : Border.all(),
+                      ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints.expand(),
+                        child: InkWell(
+                            onTap: () {
+                              if (imgNo1 != index) buttonClicked(index);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(7.0),
+                              child: Image.asset(
+                                  "assets/${getImage(arrayData[index])}"),
+                            )),
+                      ),
+                    );
+                  },
+                  itemCount: 48,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         if (isCelebrating)
           Center(
@@ -165,7 +172,9 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
     do {
       rndNo1 = Random().nextInt(5) + 1;
       rndNo2 = Random().nextInt(5) + 1;
-    } while (rndNo1 == arrayData[imgNo1] || rndNo2 == arrayData[imgNo2] || rndNo1 == rndNo2);
+    } while (rndNo1 == arrayData[imgNo1] ||
+        rndNo2 == arrayData[imgNo2] ||
+        rndNo1 == rndNo2);
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       score += 1;

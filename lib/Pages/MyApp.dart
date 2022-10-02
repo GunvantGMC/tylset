@@ -36,7 +36,7 @@ class _MyAppPageState extends State<MyAppPage> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            "images/back.png",
+            "assets/images/back.png",
             fit: BoxFit.cover,
           ),
           MainBodyWidget(),
