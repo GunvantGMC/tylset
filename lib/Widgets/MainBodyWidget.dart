@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:math';  //libary for generating random numbers
 
 import 'package:TylSet/main.dart';
 import 'package:flutter/cupertino.dart';
