@@ -1,4 +1,4 @@
-# TylSet
+# TylSet Android App
 
 **TylSet** is a game developed in Flutter, which is quite popular in users
 
