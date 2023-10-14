@@ -54,7 +54,7 @@ class _MainBodyWidgetState extends State<MainBodyWidget> {
                     BoxShadow(
                       blurRadius: 3.0,
                       spreadRadius: 1.0,
-                      color: Colors.red,
+                      color: Colors.black,
                       offset: Offset(0, 3),
                     ),
                   ],
